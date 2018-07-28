@@ -36,7 +36,7 @@ pipeline {
     stage('ValidateRuboCop') {
       steps {
         ansiColor('RSpec') {
-          echo 'Running RSPEC Final'
+          echo 'Running RSPEC Final '
           sh 'bundle exec rspec'
         }
       }
