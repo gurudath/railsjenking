@@ -20,6 +20,7 @@ pipeline {
         checkout scm
         ansiColor('RSpec') {
           echo 'Setting Up The RSpec Requirements'
+          sh 'sudo chmod 777 -R /var/lib/gems/2.3.0'
           sh 'gem install bundle'
           sh 'bundle install'
         }
