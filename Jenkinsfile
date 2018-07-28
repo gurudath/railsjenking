@@ -19,7 +19,6 @@ pipeline {
         ansiColor('RSpec') {
           echo 'Setting Up The RSpec Requirements'
           sh 'export RAILS_ENV=test'
-          sh 'source $HOME/.bashrc'
           sh 'cd .'
           sh 'rvmsudo gem install bundle'
           sh 'bundle install'
