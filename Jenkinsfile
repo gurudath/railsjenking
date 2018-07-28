@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 pipeline {
 
   agent any
@@ -18,10 +20,7 @@ pipeline {
         checkout scm
         ansiColor('RSpec') {
           echo 'Setting Up The RSpec Requirements'
-          sh 'export RAILS_ENV=test'
-          sh '/home/user/.rvm/scripts/rvm'
-          sh 'cd .'
-          sh 'rvmsudo gem install bundle'
+          sh 'gem install bundle'
           sh 'bundle install'
         }
       }
