@@ -20,7 +20,7 @@ pipeline {
           echo 'Setting Up The RSpec Requirements'
           sh 'export RAILS_ENV=test'
           sh 'cd .'
-          sh 'rvmsudo gem install bundle'
+          sh 'gem install bundle'
           sh 'bundle install'
         }
       }
