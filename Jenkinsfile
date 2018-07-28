@@ -20,6 +20,7 @@ pipeline {
         checkout scm
         ansiColor('RSpec') {
           echo 'Setting Up The RSpec Requirements'
+          sh 'chown -R  /var/lib/gems'
           sh 'gem install bundle'
           sh 'bundle install'
         }
