@@ -1,8 +1,6 @@
 pipeline {
 
-  agent {
-    label 'gurudath-jenkins'
-  }
+  agent any
 
   options {
     timeout(time: 90, unit: 'MINUTES')
