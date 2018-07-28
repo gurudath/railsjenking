@@ -61,7 +61,6 @@ group :development, :test do
   gem 'simplecov-console'
   gem 'guard-rspec'
   gem 'spring-commands-rspec'
-  gem 'sqlite3'
   gem 'database_cleaner'
   gem 'rake-rspec'
 end
