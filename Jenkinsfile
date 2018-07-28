@@ -17,7 +17,11 @@ pipeline {
         cleanWs()
         checkout scm
         ansiColor('RSpec') {
-          sh 'gem install bundle && bundle install'
+          sh 'export RAILS_ENV=test'
+          sh 'source $HOME/.bashrc'
+          sh 'cd .''
+          sh 'rvmsudo gem install bundle'
+          sh 'bundle install'
         }
       }
     }
