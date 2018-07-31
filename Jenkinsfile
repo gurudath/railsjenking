@@ -48,9 +48,6 @@ pipeline {
       steps {
         script {
           add = docker.build("gurudath/jenkinstest")
-          app.inside {
-            sh 'echo $(curl localhost:3000)'
-          }
         }
       }
     }
