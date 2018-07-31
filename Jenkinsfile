@@ -83,7 +83,7 @@ pipeline {
                       } catch (err) {
                           echo: 'caught error: $err'
                       }
-                      sh "sshpass -p 'gurudath' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker run --restart always --name jenkinstestprod -p 3000:3000 -d gurudath/jenkinstest:${env.BUILD_NUMBER}\""
+                      sh "sshpass -p gurudath ssh -o StrictHostKeyChecking=no $user@$prod_ip \"docker run --restart always --name jenkinstestprod -p 3000:3000 -d gurudath/jenkinstest:${env.BUILD_NUMBER}\""
                   }
               }
           }
