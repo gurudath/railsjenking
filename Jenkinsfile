@@ -67,5 +67,26 @@ pipeline {
           }
         }
       }
+      stage('DeployToProduction') {
+          when {
+              branch 'master'
+          }
+          steps {
+              input 'Deploy to Production?'
+              milestone(1)
+              withCredentials([usernamePassword(credentialsId: 'gurudathbn1.mylabserver.com', usernameVariable: 'user', passwordVariable: 'gurudath')]) {
+                  script {
+                      sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull gurudath/jenkinstest:${env.BUILD_NUMBER}\""
+                      try {
+                          sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker stop jenkinstestprod\""
+                          sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker rm jenkinstestprod\""
+                      } catch (err) {
+                          echo: 'caught error: $err'
+                      }
+                      sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker run --restart always --name jenkinstestprod -p 3000:3000 -d gurudath/jenkinstest:${env.BUILD_NUMBER}\""
+                  }
+              }
+          }
+      }
     }
 }
