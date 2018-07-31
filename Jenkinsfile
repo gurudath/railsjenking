@@ -76,10 +76,10 @@ pipeline {
               milestone(1)
               withCredentials([usernamePassword(credentialsId: 'gurudathbn1.mylabserver.com', usernameVariable: 'user', passwordVariable: 'gurudath')]) {
                   script {
-                      sh "sshpass -p 'gurudath' -v ssh -o StrictHostKeyChecking=no user@$prod_ip \"docker pull gurudath/jenkinstest:${env.BUILD_NUMBER}\""
+                      sh "sshpass -p gurudath -v ssh -o StrictHostKeyChecking=no user@$prod_ip \"docker pull gurudath/jenkinstest:${env.BUILD_NUMBER}\""
                       try {
-                          sh "sshpass -p 'gurudath' -v ssh -o StrictHostKeyChecking=no user@$prod_ip \"docker stop jenkinstestprod\""
-                          sh "sshpass -p 'gurudath' -v ssh -o StrictHostKeyChecking=no user@$prod_ip \"docker rm jenkinstestprod\""
+                          sh "sshpass -p gurudath -v ssh -o StrictHostKeyChecking=no user@$prod_ip \"docker stop jenkinstestprod\""
+                          sh "sshpass -p gurudath -v ssh -o StrictHostKeyChecking=no user@$prod_ip \"docker rm jenkinstestprod\""
                       } catch (err) {
                           echo: 'caught error: $err'
                       }
