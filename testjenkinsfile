@@ -41,18 +41,5 @@ pipeline {
         }
       }
     }
-    stage('Docker Build') {
-      when {
-        branch 'master'
-      }
-      steps {
-        script {
-          add = docker.build("gurudath/jenkinstest")
-          app.inside {
-            sh 'echo $(curl localhost:3000)'
-          }
-        }
-      }
-    }
   }
 }
