@@ -49,7 +49,7 @@ pipeline {
           app = docker.build("gurudath/jenkinstest")
           app.inside {
             sh 'echo Hello World'
-            sh 'echo $(curl localhost:3000)'
+            sh 'echo $(curl localhost:8001)'
           }
         }
       }

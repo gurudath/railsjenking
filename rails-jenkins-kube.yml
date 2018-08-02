@@ -8,8 +8,8 @@ spec:
     app: jenkinstestprod
   ports:
   - protocol: TCP
-    port: 3000
-    nodePort: 3000
+    port: 8001
+    nodePort: 8001
 
 ---
 
@@ -33,4 +33,4 @@ spec:
       - name: jenkinstestprod
         image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
         ports:
-        - containerPort: 8080
+        - containerPort: 8001
