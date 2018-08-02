@@ -1,4 +1,4 @@
-#!/usr/bin/env groovy
+//!/usr/bin/env groovy
 
 pipeline {
 
@@ -9,8 +9,12 @@ pipeline {
   }
 
   environment {
-    LANG="C"
-    LC_ALL="en_US.UTF-8"
+//    LANG="C"
+//    LC_ALL="en_US.UTF-8"
+//  }
+
+  environment {
+      DOCKER_IMAGE_NAME = "gurudath/jenkinstest"
   }
 
   stages {
@@ -49,6 +53,7 @@ pipeline {
         script {
           app = docker.build("gurudath/jenkinstest")
           app.inside {
+            sh 'echo Hello World'
             sh 'echo $(curl localhost:3000)'
           }
         }
@@ -74,19 +79,29 @@ pipeline {
           steps {
               input 'Deploy to Production?'
               milestone(1)
-              withCredentials([usernamePassword(credentialsId: 'gurudathbn1.mylabserver.com', usernameVariable: 'user', passwordVariable: 'gurudath')]) {
-                  script {
-                      sh "sshpass -p gurudath ssh -o StrictHostKeyChecking=no user@$prod_ip \"docker pull gurudath/jenkinstest:${env.BUILD_NUMBER}\""
-                      try {
-                          sh "sshpass -p gurudath -v ssh -o StrictHostKeyChecking=no user@$prod_ip \"docker stop jenkinstestprod\""
-                          sh "sshpass -p gurudath -v ssh -o StrictHostKeyChecking=no user@$prod_ip \"docker rm jenkinstestprod\""
-                      } catch (err) {
-                          echo: 'caught error: $err'
-                      }
-                      sh "sshpass -p gurudath ssh -o StrictHostKeyChecking=no $user@$prod_ip \"docker run --restart always --name jenkinstestprod -p 3000:3000 -d gurudath/jenkinstest:${env.BUILD_NUMBER}\""
-                  }
-              }
+              kubernetesDeploy(
+                  kubeconfigId: 'kubeconfig',
+                  configs: 'rails-jenkins-kube.yml',
+                  enableConfigSubstitution: true
+              )
           }
+          //steps {
+          //    input 'Deploy to Production?'
+          //    milestone(1)
+          //    withCredentials([usernamePassword(credentialsId: 'gurudathbn1.mylabserver.com', usernameVariable: 'user', passwordVariable: 'gurudath')]) {
+          //        script {
+          //            sh "sshpass -p gurudath ssh -o StrictHostKeyChecking=no user@$prod_ip \"docker pull gurudath/jenkinstest:${env.BUILD_NUMBER}\""
+          //            try {
+          //                sh "sshpass -p gurudath -v ssh -o StrictHostKeyChecking=no user@$prod_ip \"docker stop jenkinstestprod\""
+          //                sh "sshpass -p gurudath -v ssh -o StrictHostKeyChecking=no user@$prod_ip \"docker rm jenkinstestprod\""
+          //            } catch (err) {
+          //                echo: 'caught error: $err'
+          //            }
+          //            sh "sshpass -p gurudath ssh -o StrictHostKeyChecking=no $user@$prod_ip \"docker run --restart always --name jenkinstestprod -p 3000:3000 -d gurudath/jenkinstest:${env.BUILD_NUMBER}\""
+          //        }
+          //    }
+          //}
+
       }
     }
 }
