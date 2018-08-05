@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: jenkinstestprod-service
+  name: jenkinstestprod
 spec:
   type: NodePort
   selector:
@@ -16,7 +16,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: jenkinstestprod-deployment
+  name: jenkinstestprod
   labels:
     app: jenkinstestprod
 spec:
