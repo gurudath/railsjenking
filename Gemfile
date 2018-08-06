@@ -51,8 +51,8 @@ end
 #   gem 'traceroute'
 #   gem 'brakeman', require: false
 #   gem 'bundler-audit', require: false
-#   gem 'rspec-rails', '~> 3.6'
-#   gem 'rails-controller-testing'
+  gem 'rspec-rails', '~> 3.6'
+  gem 'rails-controller-testing'
 #   gem "factory_bot_rails", "~> 4.0"
 #   gem 'capybara'
 #   gem 'faker'
