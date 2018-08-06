@@ -4,6 +4,7 @@ FROM ruby:2.3
 # RUN bundle config --global frozen 1
 
 RUN mkdir -p /usr/src/app
+VOLUME /usr/src/app
 WORKDIR /usr/src/app
 
 EXPOSE 8001
