@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y sqlite3 --no-install-recommends && rm -
 COPY Gemfile /usr/src/app/
 
 # Uncomment the line below if Gemfile.lock is maintained outside of build process
-COPY Gemfile.lock /usr/src/app/
+# COPY Gemfile.lock /usr/src/app/
 
 
 RUN bundle install
