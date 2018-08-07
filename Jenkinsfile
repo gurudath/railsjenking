@@ -24,7 +24,7 @@ pipeline {
     }
     stage('Docker Build') {
       when {
-        branch 'master'
+        branch 'local'
       }
       steps {
         script {
@@ -38,7 +38,7 @@ pipeline {
     }
     stage('Docker Hub Push') {
       when {
-        branch 'master'
+        branch 'local'
       }
       steps {
         script {
@@ -51,7 +51,7 @@ pipeline {
       }
       stage('DeployToProduction') {
           when {
-              branch 'master'
+              branch 'local'
           }
           steps {
               input 'Deploy to Production?'
