@@ -10,7 +10,7 @@ spec:
   ports:
   - protocol: TCP
     port: 8001
-    nodePort: 8001
+    nodePort: 8002
 
 ---
 
@@ -37,33 +37,3 @@ spec:
         image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
         ports:
         - containerPort: 8001
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8001
-          initialDelaySeconds: 15
-          timeoutSeconds: 1
-          periodSeconds: 10
-        resources:
-          requests:
-            cpu: 200m
-
----
-
-apiVersion: autoscaling/v2beta1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: jenkinstestprod
-  namespace: default
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: jenkinstestprod
-  minReplicas: 1
-  maxReplicas: 4
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      targetAverageUtilization: 50
